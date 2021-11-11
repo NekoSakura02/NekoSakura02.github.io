@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Números</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="css/estilos.css">
+    <script src="js/libs/bignumber.js/bignumber.min.js"></script>
+    <script src="js/libs/numeral.js/numeral.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>- - - - - Calculadora - - - - -</h1>
+    </header>
+    <form id="forma" action="javascript:procesa()">
+      <p><em>El borde azul indica obligatorio</em></p> 
+      <br>
+      <p>
+        <label accesskey="OP1">
+          Operador 1: 
+          <input name="op1" type="text" class="operador"
+                  required pattern="^[0-9]{1,9}$"
+                  maxlength="11"
+                  size="20" placeholder="Valido hasta 100,000,000">
+        </label>
+      </p>
+      <p>
+        <label accesskey="OP2">
+          Operador 2: 
+          <input name="op2" type="text" class="operador"
+                 required pattern="^[0-9]{1,9}$"
+                 maxlength="11"
+                 size="20" placeholder="Valido hasta 100,000,000">
+        </label>
+      </p>
+      <br>
+      <p>
+         <input type="submit" value="Procesar" accesskey="O"> 
+         <button id="limpiar">Limpiar</button>
+       </p>
+       <br><output id="salidaSuma"></output>
+       <br><output id="salidaResta"></output>
+       <br><output id="salidaMulti"></output>
+       <br><output id="salidaDiv"></output>
+    </form>
+    <footer>
+      <br>Copyright © 2021 Claudia Ixchel Valadez Hernandez<br>
+    </footer>
+      <script src="js/CtrlCalcular.js"></script>
+  </body>
+</html>
