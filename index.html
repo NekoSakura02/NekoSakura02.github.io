@@ -5,47 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link  rel="stylesheet" href="css/estilos.css">
-    <script src="js/libs/bignumber.js/bignumber.min.js"></script>
-    <script src="js/libs/numeral.js/numeral.min.js"></script>
+
+    <!-- Carga del núcleo de FireBase JS SDK -->
+    <script src = "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Autentificación -->
+    <script src = "https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <script src="js/init.js"></script>
   </head>
   <body>
-    <header>
-      <h1>- - - - - Calculadora - - - - -</h1>
-    </header>
-    <form id="forma" action="javascript:procesa()">
-      <p><em>El borde azul indica obligatorio</em></p> 
-      <br>
-      <p>
-        <label accesskey="OP1">
-          Operador 1: 
-          <input name="op1" type="text" class="operador"
-                  required pattern="^[0-9]{1,9}$"
-                  maxlength="11"
-                  size="20" placeholder="Valido hasta 100,000,000">
-        </label>
-      </p>
-      <p>
-        <label accesskey="OP2">
-          Operador 2: 
-          <input name="op2" type="text" class="operador"
-                 required pattern="^[0-9]{1,9}$"
-                 maxlength="11"
-                 size="20" placeholder="Valido hasta 100,000,000">
-        </label>
-      </p>
-      <br>
-      <p>
-         <input type="submit" value="Procesar" accesskey="O"> 
-         <button id="limpiar">Limpiar</button>
-       </p>
-       <br><output id="salidaSuma"></output>
-       <br><output id="salidaResta"></output>
-       <br><output id="salidaMulti"></output>
-       <br><output id="salidaDiv"></output>
-    </form>
+    <h1> Autenticación</h1>
+    <h1> Sesión </h1>
+    <fieldset>
+      <legend> Email </legend>
+      <output id = "email"> <progress max="100"> Cargando... </progress></output>
+    </fieldset>
+    <fieldset>
+      <legend> Nombre </legend>
+      <output id = "nombre"></output>
+    </fieldset>
+    <figure><img id = "avatar" alt="Avatar"></figure>
+    <button type = "button" onclick="terminaSesión()"> Terminar Sesión</button>
     <footer>
-      <br>Copyright © 2021 Claudia Ixchel Valadez Hernandez<br>
-    </footer>
-      <script src="js/CtrlCalcular.js"></script>
+        <br>Copyright © 2021 Claudia Ixchel Valadez Hernandez<br>
+        </footer>
+    <script>
+      //@ts-check
+      /** Conexión al sistema de autenticación de Firebase. */
+      // @ts-ignore
+      const auth = firebase.auth();
+      /** Tipo de autenticación de usuario con Coogle*/
+      // @ts-ignore
+      const provider = new firebase.auth.GoogleAuthProvider();
+      /* Configura el proveedor de Google para la selección e lista */
+      provider.setCustomParameters({ prompt: "select_account"});
+      /* Recibe una función que se invoca cada que hay un cambio en la autenticación y recibe el modelo con las características del usuario. */
+      auth.onAuthStateChanged(
+        /** Recibe las características del usuario o nillo si no se ha iniciado la sesión. */
+        usuarioAuth => {
+          if(usuarioAuth && usuarioAuth.email){
+            // Usuario aceptado.
+            // @ts-ignore Muestra el email registrado en Google.
+            email.value = usuarioAuth.email;
+            // @ts-ignore Muestra el nombre registrado en Google.
+            nombre.value = usuarioAuth.displayName;
+            // @ts-ignore Muestra el avatar registrado en Google.
+            avatar.src = usuarioAuth.photoURL;
+          } else {
+            //No ha iniciado sesión que pide datos iniciales.
+            auth.sigInWithRedirect(provider);
+          }
+        },
+        // Función que se invoca si existe error de verificación.
+        procesaError
+      );
+      /** Termina la sesión.*/
+      async function terminaSesión(){
+        try {
+          await auth.singOut()
+        } catch (e) {
+          procesaError(e);
+        }
+      }
+      /** Procesa error y muestra tanto objeto en consola como cuadro de alerta @param {Error} y descripción del error. */
+      function procesaError(e) {
+        console.log(e);
+        alert(e.mesage);
+      }
+      </script>
   </body>
 </html>
