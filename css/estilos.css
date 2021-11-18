@@ -1,0 +1,10 @@
+html{font-family: 'Segoe UI';text-align: center}
+body{display: inline-block; text-align: left}
+h1{font-family:'Lucida Sans'}
+label, legend {font-weight: normal}
+*:required, .obligatorio {border: double rgb(162, 0, 255)}
+input[type=number], .numero {text-align: right;}
+input[type=submit]{border:inset;margin-left:60px;margin-right:60px}
+button{border:inset;margin-left:60px;margin-right:60px}
+dfn {font-weight: bold}
+.error {color:red}
