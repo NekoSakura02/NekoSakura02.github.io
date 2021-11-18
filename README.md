@@ -1,2 +1,3 @@
-# bewp3cv51.github.io
-Ejemplo de un chat y acceso a Firebase (Firestore con Google)
+# NekoSakura02.github.io
+Ejemplo de un chat, autenticación y acceso a Firebase (Firestore con Google)
+Sitio web: https://NekoSakura02.github.io
